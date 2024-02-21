@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -39,8 +40,7 @@ var (
 
 func main() {
 	recordMetrics()
-
-	// ??
+	// metrics reporter
 	http.Handle("/metrics", promhttp.Handler())
-	http.ListenAndServe(":8181", nil)
+	http.ListenAndServe(os.Getenv("METRICS_PORT"), nil)
 }
